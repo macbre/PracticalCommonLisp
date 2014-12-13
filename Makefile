@@ -48,9 +48,10 @@ create_epub: create_folder
 	cd ${DIR}; \
 	pandoc ${EPUBOPTS} -o ${OUTPUT}.epub ${HTML_FILES}
 
-#  Create Kindle version (ignoring the error that it outputs)
-create_kindle: create_epub 
-	-${KINDLEGEN} ${DIR}/${OUTPUT}.epub
+#  Create Kindle version using calibre's ebook-convert
+create_kindle: create_folder
+	cd ${DIR}; \
+	ebook-convert index.html ${OUTPUT}.mobi --cover cover.jpg --title "Practical Common Lisp" --authors "Peter Seibel" --tags "lisp"
 
 #  Clean up, so that only the product files remain
 remove_files: create_folder
